@@ -64,11 +64,11 @@ negamax(J, Etat, P, Pmax, [rien, Val]) :-
   ground(Etat),!,
   heuristique(J,Etat,Val).
 
-negamax(J, Etat, P, Pmax, Couple) :-
-  successeurs(J,Etat,Succ),
-  loop_negamax(J,P,Pmax,Succ, LCouples),
-  meilleur(Lcouples, Couple),
-  Couple = [Coup, -Val].
+negamax(J, Etat, P, Pmax, [Coup, NewVal]) :-
+	successeurs(J, Etat, L_Succ),
+	loop_negamax(J, P, Pmax, L_Succ, L_Val_Succ),
+	meilleur(L_Val_Succ, [Coup, Val]),
+	NewVal is - Val.
 
 
 
