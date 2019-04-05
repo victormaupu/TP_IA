@@ -155,7 +155,7 @@ faut pas realiser l'unification.
 */
 
 % A FAIRE
-unifiable(X,J) :- X = J.
+unifiable(X,J) :- not(not(J = X)).
 
 /**********************************
  DEFINITION D'UN ALIGNEMENT GAGNANT
@@ -172,11 +172,12 @@ pour son adversaire.
 % A FAIRE
 
 alignement_gagnant(Ali, J) :-
-  possible(Ali,J).
+  possible(Ali,J),
+  ground(Ali).
 
 alignement_perdant(Ali, J) :-
   adversaire(J,K),
-  alignement_gagant(Ali,K).
+  alignement_gagnant(Ali,K).
 
 
 /******************************
@@ -191,6 +192,7 @@ lorsqu'un joueur J joue en coordonnees [L,C]
 successeur(J,Etat,[L,C]) :-
   nth1(L,Etat,Ligne),
   nth1(C,Ligne,Element),
+  var(Element),
   Element = J.
 
 /**************************************
@@ -206,7 +208,7 @@ moins
    le nombre d'alignements possibles pour l'adversaire de J
 */
 
-/*
+
 heuristique(J,Situation,H) :-		% cas 1
  H = 10000,				% grand nombre approximant +infini
  alignement(Alig,Situation),
@@ -216,7 +218,7 @@ heuristique(J,Situation,H) :-		% cas 2
  H = -10000,				% grand nombre approximant -infini
  alignement(Alig,Situation),
  alignement_perdant(Alig,J),!.
-*/
+
 
 % on ne vient ici que si les cut precedents n'ont pas fonctionne,
 % c-a-d si Situation n'est ni perdante ni gagnante.

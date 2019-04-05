@@ -58,11 +58,24 @@ A FAIRE : ECRIRE ici les clauses de negamax/5
 */
 negamax(J, Etat, P, Pmax, [rien, Val]) :-
   P = Pmax,!,
-  heuristique(J,Etat,Val).
+  heuristique(J,Etat,NewVal),
+  ( Pmax mod 2 == 1 ->
+			Val is -NewVal
+	;
+			Val is NewVal
+  ).
+
+
 
 negamax(J, Etat, P, Pmax, [rien, Val]) :-
   ground(Etat),!,
-  heuristique(J,Etat,Val).
+  heuristique(J,Etat,NewVal),
+  ( P mod 2 == 1 ->
+			Val is -NewVal
+	;
+			Val is NewVal
+  ).
+
 
 negamax(J, Etat, P, Pmax, [Coup, NewVal]) :-
 	successeurs(J, Etat, L_Succ),
@@ -136,7 +149,6 @@ On suppose que chaque element de la liste est du type [C,V]
 A FAIRE : ECRIRE ici les clauses de meilleur/2
 */
 
-
   /*Cas1 */
 
 meilleur([Couple|[]], Couple) :- !.
@@ -154,8 +166,6 @@ meilleur([Couple|REST], Res2):-
   Couple = [_,V],
   Res2 = [_,V2],
   V>=V2, !.
-
-
 
 
 
