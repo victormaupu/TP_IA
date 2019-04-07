@@ -67,7 +67,7 @@ negamax(J, Etat, P, Pmax, [rien, Val]) :-
 
 
 
-negamax(J, Etat, P, Pmax, [rien, Val]) :-
+negamax(J, Etat, P, _, [rien, Val]) :-
   ground(Etat),!,
   heuristique(J,Etat,NewVal),
   ( P mod 2 == 1 ->
